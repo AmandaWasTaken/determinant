@@ -1,4 +1,4 @@
-Another silly side "project" I made instead of doing school work
+Another silly side "project" I made instead of doing school work  
 Computes the determinant of a given matrix (only supports 2x2 and 3x3 for now but more will come soontm)
 
 # Build
