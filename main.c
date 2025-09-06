@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getMinor(int** m, char c){
+int get_minor(int** m, char c){
   
   int min;
   switch(c){
@@ -23,24 +23,27 @@ int getMinor(int** m, char c){
 int determinant(size_t size, int** m) {
 
 	int det = 0;
-	if(size == 1){ 
-    		return m[0][0];
-  	} else if(size == 2){
-    		det = (m[0][0])*(m[1][1]) - (m[0][1])*(m[1][0]);  
-  	} else if(size == 3){
-    
-    		int a = m[0][0];
-	    	int b = m[0][1];
-	    	int c = m[0][2];
-	   	int a_minor = getMinor(m, 'a');
-	   	int b_minor = getMinor(m, 'b');   
-	   	int c_minor = getMinor(m, 'c');
-	   	det = a*a_minor - b*b_minor + c*c_minor; 
-	} else {
-		fprintf(stderr, "Size only up to 3x3 supported (for now)\n");
-		exit(1);
+
+	switch(size){
+		case 1:
+			return m[0][0];
+			break;
+		case 2:
+			det = (m[0][0])*(m[1][1]) - (m[0][1])*(m[1][0]);  
+			break;
+		case 3:
+	    		int a = m[0][0];
+		    	int b = m[0][1];
+		    	int c = m[0][2];
+		   	int a_minor = get_minor(m, 'a');
+		   	int b_minor = get_minor(m, 'b');   
+		   	int c_minor = get_minor(m, 'c');
+		   	det = a*a_minor - b*b_minor + c*c_minor; 
+			break;
+		default:
+			fprintf(stderr, "Only 2x2 and 3x3 supported for now\n");
+			exit(1);
 	}
-  
   	return det;
 }
 
@@ -73,13 +76,15 @@ void print_matrix(int** mtx, int row){
 
 	printf("\n");
 	for(int i = 0; i < row; i++){
+		printf("[");
 		for(int j = 0; j < row; j++){
 			printf("%c: %3i ", idx, mtx[i][j]);
 			idx++;
 		}
-		printf("\n");
+		if(!(i % row)) 
+			puts("]"); 
 	}
-	printf("\n");
+	puts("]\n");
 }
 
 
