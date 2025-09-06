@@ -2,6 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef _WIN32
+#include <conio.h>
+#endif
+
+// Clear terminal
+#define clear() do \
+{ \
+	printf("\e[1;1H\e[2J"); \
+} while(0)	
+
+
 int get_minor(int** m, char c){
   
   int min;
@@ -71,20 +82,18 @@ int** create_matrix(int row){
 
 void print_matrix(int** mtx, int row){
 
+	clear();
 	char idx = 'a';
-	int j = 0;	
 
-	printf("\n");
+	printf("Matrix:\n");
 	for(int i = 0; i < row; i++){
 		printf("[");
 		for(int j = 0; j < row; j++){
 			printf("%c: %3i ", idx, mtx[i][j]);
 			idx++;
 		}
-		if(!(i % row)) 
-			puts("]"); 
+		puts("]\n");
 	}
-	puts("]\n");
 }
 
 
@@ -114,7 +123,7 @@ int main(int argc, char** argv){
 	print_matrix(mtx, rows);
 
 	int det = determinant(rows, mtx);
-	printf("Det: %i\n", det);
+	printf("Determinant: %i\n", det);
 	free_mtx(mtx, rows);
 	return 0;
 }
